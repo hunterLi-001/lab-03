@@ -47,6 +47,7 @@ fun CityListScreen(
     var selectedCity by remember { mutableStateOf<City?>(null) }
 
 
+
     Column(modifier = modifier.fillMaxSize()) {
 
         //new row
@@ -64,6 +65,7 @@ fun CityListScreen(
             }
          // new row
         }
+
 
         //two actions: one is to add city. another one is to update city
         if(showAddCityFields || selected) {
@@ -98,7 +100,7 @@ fun CityListScreen(
                 Button(
                     modifier = Modifier.padding(vertical = 12.dp).padding(top = 30.dp),
                     onClick = {
-                        if (newCityName.isNotBlank() && newProvinceName.isNotBlank()) {
+                       if (newCityName.isNotBlank() && newProvinceName.isNotBlank()) {
                             if(selected && selectedCity != null) {
                                 //set new val for replacing the old city
                                 val updatedCity = City(
@@ -106,20 +108,37 @@ fun CityListScreen(
                                     province = newProvinceName
                                 )
                                 onupdateCity(selectedCity!!, updatedCity )
-                            } else {
+                               /*
+                                selected = !selected
+                                selectedCity = null
+
+                                */
+                            }
+                            else {
                                 onAddCity(
                                     City(
                                         name = newCityName,
                                         province = newProvinceName
                                     )
                                 )
+                                /*
+                                newCityName = ""
+                                newProvinceName = ""
+                                showAddCityFields = false
+                                */
                             //else
-                            }
+                          }
+
+
                             newCityName = ""
                             newProvinceName = ""
                             showAddCityFields = false
                             selected = !selected
                             selectedCity = null
+
+
+
+                        //outer if
                         }
                     }
                 ) {
@@ -139,6 +158,8 @@ fun CityListScreen(
                     onClick = {
                             selectedCity = city
                             selected = !selected
+                            newCityName = city.name
+                            newProvinceName = city.province
                     }
                     )
                 if (index < cities.lastIndex) {
@@ -146,10 +167,10 @@ fun CityListScreen(
                 }
             }
         }
+
+    //column
     }
 
-
-//column
 }
 
 @Composable
